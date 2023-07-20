@@ -1,1 +1,31 @@
+#include <DHT.h>
 
+#define DHT_PIN 4      // 온도 센서의 데이터 핀
+#define DHT_TYPE DHT11 // 센서 종류 (DHT11 또는 DHT22)
+
+DHT dht(DHT_PIN, DHT_TYPE);
+unsigned long previousMillis = 0;
+const long interval = 1000; // 측정 주기를 1초로 설정
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis; // 이전 시간을 업데이트
+
+    float temperature = dht.readTemperature(); // 온도 측정
+
+    if (!isnan(temperature)) { // 온도 값이 유효한지 확인
+      Serial.print("Temperature: ");
+      Serial.print(temperature);
+      Serial.println(" °C");
+    } else {
+      Serial.println("Failed to read temperature!");
+    }
+  }
+}
