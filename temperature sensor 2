@@ -1,0 +1,32 @@
+#include <DHT.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+#define DHT_PIN 8     
+#define DHT_TYPE DHT11
+
+DHT dht(DHT_PIN, DHT_TYPE);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+  lcd.init();         
+  lcd.backlight();      
+  lcd.print("Temperature:");
+}
+
+void loop() {
+  float temperature = dht.readTemperature();
+
+  if (!isnan(temperature)) {
+    lcd.setCursor(0, 1);  
+    lcd.print(temperature); 
+    lcd.print(" °C");    
+  } else {
+    lcd.setCursor(0, 1);
+    lcd.print("Error"); 
+  }
+
+  delay(1000);
+}
