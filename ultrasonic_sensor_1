@@ -1,0 +1,20 @@
+int echo_pin=3;
+int trig_pin=11;
+void setup(){
+  Serial.begin(9600);
+  pinMode(echo_pin,INPUT);
+  pinMode(trig_pin,LOW);
+}
+void loop(){
+float duration, distance;
+digitalWrite(trig-pin,HIGH);
+delay(10);
+digitalWrite(trig_pin,LOW);
+duration=pulseln(echo_pin,HIGH); 
+}
+duration=pulseln(echo_pin, HIGH);
+distance=(float(duration/2)/29.1);
+Serial.print(distance);
+Serial.println("mm");
+delay(3)
+}
